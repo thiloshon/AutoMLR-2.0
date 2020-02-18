@@ -10,7 +10,11 @@ file_names <-
   )
 runs <- as_tibble(data.frame())
 
+jkl <- 1
+
 for (file in file_names) {
+  jkl <- jkl + 1
+  
   print(file)
   run_list <- fromJSON(file)
   
@@ -19,19 +23,23 @@ for (file in file_names) {
     elem <- run_list$run[[i]]
     
     if (class(elem) != "data.frame" && class(elem) != "list") {
-      flat_list[names(run_list$run)[i]] <- run_list$run[i]
+      if (names(run_list$run)[i] == "tag") {
+        next()
+      } else {
+        flat_list[names(run_list$run)[i]] <- run_list$run[i]
+      }
+      
       
     } else if (names(run_list$run)[i] == "input_data") {
       flat_list["input_data_dataset"] <- run_list$run[i]
       
     } else if (names(run_list$run)[i] == "output_data") {
-      print("1")
       temp <- run_list$run$output_data$evaluation
-      if(is.null(temp)){
+      if (is.null(temp)) {
         next()
       }
       
-      for(l in 1 : nrow(temp)){
+      for (l in 1:nrow(temp)) {
         flat_list[temp$name[l]] <- temp$value[l]
       }
       
@@ -41,11 +49,9 @@ for (file in file_names) {
       #   ))), temp$name))
       
     } else if (names(run_list$run)[i] == "parameter_setting") {
-      print("2")
       temp <- run_list$run$parameter_setting
-      print(temp)
-      if(class(temp) == "data.frame"){
-        for(l in 1 : nrow(temp)){
+      if (class(temp) == "data.frame") {
+        for (l in 1:nrow(temp)) {
           flat_list[temp$name[l]] <- temp$value[l]
         }
         # flat_list <-
@@ -53,9 +59,10 @@ for (file in file_names) {
         #     temp
         #   ))), temp$name))
       } else {
-        flat_list[run_list$run$parameter_setting$name] <- run_list$run$parameter_setting$value
+        flat_list[run_list$run$parameter_setting$name] <-
+          run_list$run$parameter_setting$value
       }
-     
+      
     }
   }
   
