@@ -32,7 +32,13 @@ for (file in file_names) {
   }, warning = function(warning_condition) {
     
   }, error = function(error_condition) {
-    flatList$evaluation.measures <<- run_list$task$input[[3]]$evaluation_measures$evaluation_measure
+    
+    tryCatch({
+      flatList$evaluation.measures <<- run_list$task$input[[3]]$evaluation_measures$evaluation_measure
+    }, error = function(error_condition) {
+      
+    })
+    
   }, finally={
     
   })

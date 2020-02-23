@@ -12,4 +12,5 @@ for (file in file_names) {
   flows <- bind_rows(flows, flow_tibble)
 }
 
+flows
 

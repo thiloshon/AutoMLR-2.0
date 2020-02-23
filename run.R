@@ -2,7 +2,7 @@ library(httr)
 
 # 10437614
 
-for (run in 372001:400000) {
+for (run in 600000:700000) {
   # remove index
   
   print(paste("Run: ", run))

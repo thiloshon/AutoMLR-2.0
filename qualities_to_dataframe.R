@@ -16,4 +16,5 @@ for (file in file_names) {
   qualities <- bind_rows(qualities, quality_df)
 }
 
+qualities
 
